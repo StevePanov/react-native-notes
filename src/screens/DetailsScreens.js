@@ -1,6 +1,6 @@
 import React from "react";
 import { Form, Input, Label, Textarea, DatePicker } from "native-base";
-import { ScrollView, View, Text } from "react-native";
+import { ScrollView, View, Text, TextInput } from "react-native";
 
 import { HeaderApp } from "../components";
 import { updateNote, insertNewNote } from "../../databases/allSchemas";
@@ -16,9 +16,9 @@ export class DetailsScreen extends React.Component {
   setDescription = value => {
     this.setState({ description: value });
   };
-  setDate = value => {
-    this.setState({ date: value });
-  };
+  // setDate = value => {
+  //   this.setState({ date: value });
+  // };
   saveNote = (id, title, description, date) => {
     this.setState({ id, title, description, date });
     if (!!id) {
@@ -70,7 +70,7 @@ export class DetailsScreen extends React.Component {
           title={this.props.navigation.state.params.header}
           onPressLeft={() => this.props.navigation.goBack()}
           onPressRight={
-            !!title && !!description && !!date
+            !!title && !!description
               ? () => this.saveNote(id, title, description, date)
               : () => alert("Fill in all fields!")
           }
@@ -86,21 +86,37 @@ export class DetailsScreen extends React.Component {
           >
             <Form>
               <Label>Title:</Label>
-              <Input
-                placeholder="Write title"
+              <TextInput
+                style={{
+                  height: 40,
+                  borderColor: "rgb(200, 200, 200)",
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                onChangeText={text => this.setTitle(text)}
                 value={title}
-                onChangeText={this.setTitle}
+                placeholder="Write title"
               />
 
               <Label>Description:</Label>
-              <Textarea
-                rowSpan={5}
+              <TextInput
+                style={{
+                  minHeight: 40,
+                  borderColor: "rgb(200, 200, 200)",
+                  borderWidth: 1,
+                  borderRadius: 10,
+                  padding: 10
+                }}
+                multiline={true}
+                numberOfLines={7}
+                onChangeText={text => this.setDescription(text)}
+                value={title}
                 placeholder="Write description"
                 value={description}
-                onChangeText={this.setDescription}
               />
 
-              <DatePicker
+              {/* <DatePicker
                 locale={"en"}
                 timeZoneOffsetInMinutes={undefined}
                 modalTransparent={false}
@@ -109,8 +125,22 @@ export class DetailsScreen extends React.Component {
                 textStyle={{ color: "black" }}
                 onDateChange={this.setDate}
                 disabled={false}
-              />
-              <Text>{date.toString().substr(4, 12)}</Text>
+              /> */}
+              {this.props.navigation.state.params.header === "Edit" && (
+                <View>
+                  <Label>Date:</Label>
+                  <TextInput
+                    style={{
+                      height: 40,
+                      borderColor: "rgb(200, 200, 200)",
+                      borderWidth: 1,
+                      borderRadius: 10,
+                      padding: 10
+                    }}
+                    value={date.toString().substr(4, 12)}
+                  />
+                </View>
+              )}
             </Form>
           </View>
         </ScrollView>

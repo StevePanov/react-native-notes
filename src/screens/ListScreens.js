@@ -49,11 +49,13 @@ export class ListScreen extends React.Component {
             }}
           >
             <List>
-              {!!notes ? (
+              {notes.length > 0 ? (
                 notes.map(item => (
                   <Swipeout
                     style={{
-                      backgroundColor: "white"
+                      backgroundColor: "rgb(255, 255, 255)",
+                      borderBottomColor: "rgb(200, 200, 200)",
+                      borderBottomWidth: 1
                     }}
                     right={[
                       {
@@ -79,9 +81,8 @@ export class ListScreen extends React.Component {
                       <View>
                         <Text
                           style={{
-                            fontWeight: "bold",
                             fontSize: 18,
-                            margin: 10
+                            margin: 14
                           }}
                         >
                           {item.title}
@@ -91,7 +92,14 @@ export class ListScreen extends React.Component {
                   </Swipeout>
                 ))
               ) : (
-                <Text>no notes</Text>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    paddingTop: 20
+                  }}
+                >
+                  No notes
+                </Text>
               )}
             </List>
           </View>
