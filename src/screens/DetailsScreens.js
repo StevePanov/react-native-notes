@@ -6,10 +6,13 @@ import { HeaderApp } from "../components";
 import { updateNote, insertNewNote } from "../../databases/allSchemas";
 
 export class DetailsScreen extends React.Component {
+  // конструктор можно убрать и прописать state просто в классе как обычный метод или поле:
+  // state = { id: "", title: "", description: "", date: new Date() };
   constructor(props) {
     super(props);
     this.state = { id: "", title: "", description: "", date: new Date() };
   }
+  // советую между методов / функций проставлять пустые строки для читаемости
   setTitle = value => {
     this.setState({ title: value });
   };
@@ -58,11 +61,16 @@ export class DetailsScreen extends React.Component {
       } = this.props.navigation.state.params.data;
       this.setState({ id, title, description, date });
     }
-  }
+  } // тут почему-то нету точки с запятой (в отличие от других функций), лучше подключать eslint утилиту для того, 
+  // чтобы она следила за общим стилем кода и таких моментов не возникало (не страшно, но кого-то может смутить)
   render() {
     const { id, title, description, date } = this.state;
+    // если из this.props данные достаются не один раз в render, 
+    // то из него можно так же в начале взять данные, как и из this.state
     return (
       <View>
+        {/* Вместо таких корневых View возможно использовать фрагменты реактовские, 
+        React.Fragment - о них стоит почитать */}
         <HeaderApp
           leftBtn
           rightBtn
@@ -76,6 +84,8 @@ export class DetailsScreen extends React.Component {
           }
         />
         <ScrollView>
+          {/* Не нужно создавать View внутри ScrollView только для добавления стиля, 
+          для этого есть пропс contentContainerStyle у самого ScrollView */}
           <View
             style={{
               flex: 1,
@@ -87,6 +97,8 @@ export class DetailsScreen extends React.Component {
             <Form>
               <Label>Title:</Label>
               <TextInput
+                // все стили по хорошему лучше вынести в отдельный файлик например styles.js 
+                // и подтягивать оттуда (код будет чище)
                 style={{
                   height: 40,
                   borderColor: "rgb(200, 200, 200)",

@@ -1,13 +1,17 @@
 import React from "react";
 import { ScrollView, View, TouchableOpacity } from "react-native";
-import { HeaderApp } from "../components";
+import { HeaderApp } from "../components"; // все импорты с абсолютными путями лучше писать ниже, чем испорты из node_modules
 import { List, Text } from "native-base";
 import Swipeout from "react-native-swipeout";
 
 import { queryAllNoteList, deleteNote } from "../../databases/allSchemas";
 import realm from "../../databases/allSchemas";
 
+// Классы / компоненты и название файлов лучше делать одинаковыми, 
+// и вообще не понятно почему в названии файла - множественное число ListScreenS ?
 export class ListScreen extends React.Component {
+  // от конструктора можно избавиться как и в DetailsScreens, 
+  // только часть бизнес логики отсюда можно вынести в componentWillMount или componentDidMiount
   constructor(props) {
     super(props);
     this.state = {
@@ -19,6 +23,18 @@ export class ListScreen extends React.Component {
     });
   }
   reloadData = () => {
+    /* можно через async / await заменить код на
+       reloadData = async () => {
+         try {
+          const notes = await queryAllNoteList()
+          let notesArr = Array.from(notes);
+          this.setState({ notes: notesArr });
+         } 
+         catch (error) {
+           this.setState({ notes: [] });
+         }
+      };
+    */
     queryAllNoteList()
       .then(notes => {
         let notesArr = Array.from(notes);
@@ -34,7 +50,7 @@ export class ListScreen extends React.Component {
       <View>
         <HeaderApp
           rightBtn
-          rightBtnLabel={"Add"}
+          rightBtnLabel={"Add"} // когда присваиваем строковые значение - не нужно писать фигурные скобки
           title={"Notes"}
           onPressRight={() =>
             this.props.navigation.navigate("Details", { header: "Add" })
