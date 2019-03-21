@@ -1,15 +1,17 @@
-import React from 'react';
-import { createAppContainer, createStackNavigator } from 'react-navigation';
-import { DetailsScreen, ListScreen } from './src/screens'
+import React from "react";
+import { createAppContainer, createStackNavigator } from "react-navigation";
+
+import DetailsScreen from "./src/screens/DetailsScreen";
+import ListScreen from "./src/screens/ListScreen";
 
 const RootStack = createStackNavigator(
   {
     List: ListScreen,
-    Details: DetailsScreen,
+    Details: DetailsScreen
   },
   {
-    initialRouteName: 'List',
-    headerMode: 'none'
+    initialRouteName: "List",
+    headerMode: "none"
   }
 );
 

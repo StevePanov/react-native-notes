@@ -7,11 +7,11 @@ import {
   Button,
   Icon,
   Title,
-  Text
+  Text,
+  View
 } from "native-base";
-import { View } from "react-native"; 
 
-export class HeaderApp extends Component {
+export default class HeaderApp extends Component {
   render() {
     const {
       leftBtn,
@@ -21,10 +21,8 @@ export class HeaderApp extends Component {
       onPressLeft,
       onPressRight
     } = this.props;
-    
-    // https://docs.nativebase.io/Components.html#anatomy-headref
-    // тут написано что нужно использовать Container из NativeBase, 
-    // в который оборачивать другие компоненты данной либы (наверное имеет смысл, хоть и не видно разницы)
+
+    //использую View тк при Container основной контент ровняется по центру
     return (
       <View>
         <Header>
